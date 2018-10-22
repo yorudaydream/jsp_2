@@ -1,3 +1,4 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="com.ft.notice.NoticeDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ft.notice.NoticeDTO"%>
@@ -5,7 +6,49 @@
     pageEncoding="UTF-8"%>
     <%
    		NoticeDAO nd = new NoticeDAO();
-    	List<NoticeDTO> ar = nd.selectList();
+    	int curPage =1; 
+    	try{
+    		curPage =Integer.parseInt(request.getParameter("curPage"));
+    	} catch (Exception e){
+    		
+    	}
+    	
+    	int perPage =10;
+    	int startRow=(curPage-1)*perPage+1;//curPage*10-9;
+    	int lastRow=curPage*perPage;
+    	List<NoticeDTO> ar = nd.selectList(startRow, lastRow);
+    	
+    	//페이징
+    	//1.전체 글의 갯수
+    	int totalCount = nd.getCount();
+    	
+    	//2.전체 페이지의 갯수
+    	int totalPage = (totalCount/perPage);
+    	if(totalCount%10!=0){
+    		totalPage = (totalCount/perPage)+1;
+    	}
+    	
+    	//3. 전체 블럭의 갯수
+    	int perBlock =5;//블럭당 숫자의 갯수
+    	int totalBlock = totalPage/perBlock;
+    	if(totalPage%perBlock!=0){
+    		//totalBlock = (totalPage/perBlock)+1;
+    		totalBlock = totalBlock+1;
+    	}
+    	
+    	//4. curPage의 번호로 curBlock 구하기
+    	int curBlock = curPage/perBlock;
+    	if(curPage%perBlock !=0){
+    		curBlock = curPage/perBlock+1;
+    	}
+    	
+    	//5. curBlock 번호로 startNum, lastNum
+    	int startNum = (curPage-1)*perBlock+1;
+    	int lastNum = curPage*perBlock;
+    	
+    	if(curBlock == totalBlock){
+    		lastNum = totalPage;
+    	}
   	%>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +92,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-			<form action="./noticeWriteForm.jsp">
+			<form action="./noticeList.jsp">
 				<table class="noticeList table table-hover">
 					<thead>
 						<tr>
@@ -66,32 +109,45 @@
 							<td><%= ndt.getNum() %></td>
 							<td><a href="./noticeSelectOne?num=<%= ndt.getNum() %>"><%= ndt.getTitle() %></a></td>
 							<td><%= ndt.getWriter() %></td>
-							<td><%= ndt.getDate() %></td>
+							<td><%= ndt.getReg_date() %></td>
 							<td><%= ndt.getHit() %></td>
 						</tr>
 					</tbody>
-					<%} %>
-					<!-- <tfoot>
-						<tr>
-							<td colspan="5"><a href="./noticeWriteForm.jsp">Write</a></td>
-						</tr>
-					</tfoot> -->
+					<% } %>
 				</table>
 			</form>
 		</div>
 </div>
-
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-1">
-			<a href="./noticeWriteForm.jsp" class="btn btn-primary">Write</a>
+<div class="row">
+		<ul class="pagination">
+			<%if(curBlock>1){ %>
+			<li><a href="./noticeList.jsp?curPage=<%= 1 %>"><span class="glyphicon  glyphicon-backward"></span></a></li>
+			<%} %>
+			<%if(curBlock>1){ %>
+			<li><a href="./noticeList.jsp?curPage=<%=startNum-1%>"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+			<%} %>
+			<% for(int i=startNum; i<=lastNum; i++) {%>
+				<li><a href="./noticeList.jsp?curPage=<%=i%>"><%=i%></a></li>
+			<% } %>
+			<% if(curBlock != totalBlock){ %>
+			<li><a href="./noticeList.jsp?curPage=<%=lastNum+1%>"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+			<% } %>
+			<% if(curBlock != totalBlock){ %>
+			<li><a href="./noticeList.jsp?curPage=<%=totalPage%>"><span class="glyphicon glyphicon-forward"></span></a></li>
+			<% } %>
+			<!-- <li><a href="./noticeList.jsp?curPage=1">1</a></li> -->
+		</ul>
 		</div>
+	</div>
+<div class="container">
+	<div class="col-md-1">
+		<a href="./noticeWriteForm.jsp" class="btn btn-primary">Write</a>
 	</div>
 </div>
 
 
-
-<script>
+	<script>
 $(document).ready(function(){
   // Add smooth scrolling to all links in navbar + footer link
   $(".navbar a, footer a[href='#myPage']").on('click', function(event) {

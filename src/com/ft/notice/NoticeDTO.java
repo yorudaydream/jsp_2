@@ -7,18 +7,18 @@ public class NoticeDTO {
 	private String writer;
 	private String title;
 	private String content;
-	private Date date;
+	private Date reg_date;
 	private int hit;
 	
 	
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 	
-	
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
 	public int getNum() {
 		return num;
 	}

@@ -10,7 +10,7 @@ import com.ft.util.DBConnector;
 
 public class NoticeDAO {
 	public static void main(String[] args) throws Exception{
-		NoticeDAO nd = new NoticeDAO();
+		/*NoticeDAO nd = new NoticeDAO();
 		
 		for(int i=0; i<150; i++) {
 			NoticeDTO ndt = new NoticeDTO();
@@ -23,7 +23,11 @@ public class NoticeDAO {
 			if(i%10==0) {
 				Thread.sleep(500);
 			}
-		}
+		}*/
+		/*NoticeDAO nd=new NoticeDAO();
+		List<NoticeDTO> ar = nd.selectList();
+		System.out.println(ar);*/
+		
 	}
 /*public static void main(String[] args) throws Exception{
 		NoticeDAO nd=new NoticeDAO();
@@ -55,6 +59,28 @@ public class NoticeDAO {
 			System.out.println(n);
 		}
 	}*/
+	
+	
+	//getCount 전체 글 갯수
+	
+	public int getCount() throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "select count(num) from notice";
+		
+		PreparedStatement st = con.prepareStatement(sql);
+		
+		ResultSet rs = st.executeQuery();
+		
+		rs.next();
+		
+		int result = rs.getInt(1);
+		
+		DBConnector.disConnect(rs, st, con);
+		
+		return result;
+		
+	}
+	
 	
 	//insert
 	public int insert(NoticeDTO ndt) throws Exception{
@@ -128,7 +154,7 @@ public class NoticeDAO {
 			ndt.setTitle(rs.getString("title"));
 			ndt.setWriter(rs.getString("writer"));
 			ndt.setContent(rs.getString("content"));
-			ndt.setDate(rs.getDate("date"));
+			ndt.setReg_date(rs.getDate("reg_date"));
 			ndt.setHit(rs.getInt("hit"));
 		}
 		
@@ -138,10 +164,17 @@ public class NoticeDAO {
 	}
 	
 	//selectList
-	public List<NoticeDTO> selectList() throws Exception {
+	public List<NoticeDTO> selectList(int startRow , int lastRow) throws Exception {
 		Connection con = DBConnector.getConnect();
-		String sql = "select num, title, writer, reg_date, hit from notice order by num desc";
+		String sql = "select * from notice "
+						+"(select rownum R, N.* from "  
+						+"(select num, title, writer, reg_date, hit from notice order by num desc) N) "
+						+"where R between ? and ?";
 		PreparedStatement st = con.prepareStatement(sql);
+		
+		st.setInt(1, startRow);
+		st.setInt(2, lastRow);
+		
 		
 		ResultSet rs = st.executeQuery();
 		
@@ -153,7 +186,7 @@ public class NoticeDAO {
 			ndt.setNum(rs.getInt("num"));
 			ndt.setTitle(rs.getString("title"));
 			ndt.setWriter(rs.getString("writer"));
-			ndt.setDate(rs.getDate("date"));
+			ndt.setReg_date(rs.getDate("reg_date"));
 			ndt.setHit(rs.getInt("hit"));
 			ar.add(ndt);
 		}
