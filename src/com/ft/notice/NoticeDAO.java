@@ -12,16 +12,33 @@ public class NoticeDAO {
 	
 public static void main(String[] args) throws Exception{
 		NoticeDAO nd=new NoticeDAO();
-		NoticeDTO ndt = new NoticeDTO();
+		
 		/*List<NoticeDTO> ar = nd.selectList();
 		System.out.println(ar.get(0).getTitle());*/
 		/*NoticeDTO ar = nd.selectOne(1);
 		System.out.println(ar.getTitle());*///오류 selectOne
-		ndt.setTitle("s");
+		/*
+		 * NoticeDTO ndt = new NoticeDTO();
+		 * ndt.setTitle("s");
 		ndt.setContent("s");
 		ndt.setWriter("s");
 		int result = nd.insert(ndt);
-		System.out.println(result);
+		System.out.println(result);*/
+		List<NoticeDTO> ar = nd.selectList();
+		for(int i=0; i<ar.size(); i++) {
+			NoticeDTO ndt = ar.get(i);
+			System.out.println(ndt.getTitle());
+		}//여기서 꺼내서. 꺼내는데 인덱스번호가 필요할 때는 이 for문을 쓴다
+		
+		for(NoticeDTO ndt:ar) {
+			System.out.println(ndt.getTitle());
+		}//여기에 담는다. 결과는 위 아래 같음. 집합에 있는 걸 하나 꺼내서 표시할때. index번호 필요 없을 때
+		
+		int [] nums = new int [3];
+		
+		for(int n:nums) {
+			System.out.println(n);
+		}
 	}
 	
 	//insert

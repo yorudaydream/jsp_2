@@ -3,12 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	NoticeDAO nd = new NoticeDAO();
     	NoticeDTO ndt = new NoticeDTO();
     	
     	ndt.setTitle(request.getParameter("title"));
-    	ndt.setWriter((request.getParameter("writer"));
+    	ndt.setWriter(request.getParameter("writer"));
     	ndt.setContent(request.getParameter("content"));
+
+    	NoticeDAO nd = new NoticeDAO();
     	
     	int result = nd.insert(ndt);
     	
@@ -26,7 +27,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 
-alert(s);
+alert('<%= s%>');
 location.href="./noticeList.jsp";
 
 </script>
