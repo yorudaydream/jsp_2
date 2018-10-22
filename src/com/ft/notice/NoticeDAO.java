@@ -9,21 +9,36 @@ import java.util.List;
 import com.ft.util.DBConnector;
 
 public class NoticeDAO {
-	
-public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception{
+		NoticeDAO nd = new NoticeDAO();
+		
+		for(int i=0; i<150; i++) {
+			NoticeDTO ndt = new NoticeDTO();
+			
+			ndt.setTitle("title"+i);
+			ndt.setContent("content"+i);
+			ndt.setWriter("writer"+i);
+			nd.insert(ndt);
+			
+			if(i%10==0) {
+				Thread.sleep(500);
+			}
+		}
+	}
+/*public static void main(String[] args) throws Exception{
 		NoticeDAO nd=new NoticeDAO();
 		
-		/*List<NoticeDTO> ar = nd.selectList();
-		System.out.println(ar.get(0).getTitle());*/
-		/*NoticeDTO ar = nd.selectOne(1);
-		System.out.println(ar.getTitle());*///오류 selectOne
-		/*
+		List<NoticeDTO> ar = nd.selectList();
+		System.out.println(ar.get(0).getTitle());
+		NoticeDTO ar = nd.selectOne(1);
+		System.out.println(ar.getTitle());//오류 selectOne
+		
 		 * NoticeDTO ndt = new NoticeDTO();
 		 * ndt.setTitle("s");
 		ndt.setContent("s");
 		ndt.setWriter("s");
 		int result = nd.insert(ndt);
-		System.out.println(result);*/
+		System.out.println(result);
 		List<NoticeDTO> ar = nd.selectList();
 		for(int i=0; i<ar.size(); i++) {
 			NoticeDTO ndt = ar.get(i);
@@ -39,7 +54,7 @@ public static void main(String[] args) throws Exception{
 		for(int n:nums) {
 			System.out.println(n);
 		}
-	}
+	}*/
 	
 	//insert
 	public int insert(NoticeDTO ndt) throws Exception{
