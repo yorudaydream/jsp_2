@@ -7,16 +7,30 @@
     	NoticeDTO ndt = new NoticeDTO();
     	
     	ndt.setTitle(request.getParameter("title"));
-    	ndt.setName(request.getParameter("name"));
+    	ndt.setWriter((request.getParameter("writer"));
     	ndt.setContent(request.getParameter("content"));
     	
-    	int result = 
+    	int result = nd.insert(ndt);
+    	
+    	String s = "Write Fail";
+    	
+    	if(result>0){
+    		s ="Write Success";
+    	}
+    	
     %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+alert(s);
+location.href="./noticeList.jsp";
+
+</script>
+
 </head>
 <body>
 </body>

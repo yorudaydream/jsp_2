@@ -13,14 +13,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<table>
+<div class="container">
+	<table class="table">
 		<tr>
 			<th>글번호</th>
 			<td><input type="number" name="num" value=""></td>
 			<th>작성자</th>
-			<td><input type="text" name="name" value=""></td>
+			<td><input type="text" name="writer" value=""></td>
 		</tr>
 		<tr>
 			<th>제목</th>
@@ -28,7 +32,7 @@
 		</tr>
 		<tr>
 			<th>작성일</th>
-			<td><input type="date" name="today" value=""></td>
+			<td><input type="date" name="date" value=""></td>
 			<th>조회수</th>
 			<td><input type="number" name="hit" value=""></td>
 		</tr>
@@ -42,5 +46,6 @@
 	<a href="./noticeList.jsp">LIST</a>
 	<a href="./noticeUpdateForm.jsp?num=<%= ndt.getNum() %>">UPDATE</a>
 	<a href="./noticeDelete.jsp?num=<%= ndt.getNum() %>">DELETE</a>
+	</div>
 </body>
 </html>

@@ -4,11 +4,19 @@ import java.sql.Date;
 
 public class NoticeDTO {
 	private int num;
-	private String name;
+	private String writer;
 	private String title;
 	private String content;
-	private Date today;
+	private Date date;
 	private int hit;
+	
+	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	
 	
 	public int getNum() {
@@ -17,23 +25,17 @@ public class NoticeDTO {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getName() {
-		return name;
+	public String getWriter() {
+		return writer;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public Date getToday() {
-		return today;
-	}
-	public void setToday(Date today) {
-		this.today = today;
 	}
 	public int getHit() {
 		return hit;

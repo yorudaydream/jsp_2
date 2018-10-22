@@ -8,14 +8,15 @@
 </head>
 <body>
 	<form action="./noticeUpdateProcess.jsp">
-		<table>
+	<div class="container">
+		<table class="table">
 			<tr>
 				<th>제목</th>
 				<td><input type="text" name="title" value=""></td>
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td><input type="text" name="name" value=""></td>
+				<td><input type="text" name="writer" value=""></td>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -24,6 +25,7 @@
 				</td>
 			</tr>
 		</table>
+		</div>
 	</form>
 </body>
 </html>

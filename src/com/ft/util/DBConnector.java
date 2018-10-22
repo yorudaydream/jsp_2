@@ -8,6 +8,16 @@ import java.sql.SQLException;
 
 public class DBConnector {
 
+/*	public static void main(String[] args) {
+		try {
+			Connection con = DBConnector.getConnect();
+			System.out.println(con);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	
 	public static Connection getConnect() throws Exception {
 		Connection con = null;
 		
